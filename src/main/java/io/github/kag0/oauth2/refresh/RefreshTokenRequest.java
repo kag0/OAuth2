@@ -18,7 +18,7 @@ import java.util.Optional;
 @Value.Immutable
 public interface RefreshTokenRequest extends TokenRequest, FormCodable, Parameters {
 	@Value.Derived
-	default GrantType grantType(){
+	static GrantType grantType(){
 		return GrantType.StdGrantType.refresh_token;
 	}
 	String refreshToken();

@@ -1,4 +1,4 @@
-package io.github.kag0.oauth2.password;
+package io.github.kag0.oauth2.jwt;
 
 import io.github.kag0.oauth2.TokenRequest;
 import javaslang.collection.HashSet;
@@ -7,14 +7,13 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created by nfischer on 9/3/2016.
+ * Created by nfischer on 9/4/2016.
  */
-public class PasswordTokenRequestTest {
+public class JwtTokenRequestTest {
 	@Test
 	public void fromFormEncoded() throws Exception {
-		PasswordTokenRequest r = ImmutablePasswordTokenRequest.builder()
-				.username("jim")
-				.password("pass☢")
+		JwtTokenRequest r = ImmutableJwtTokenRequest.builder()
+				.assertion("pass☢")
 				.scope(HashSet.of("hi", "world"))
 				.build();
 		String rEncoded = r.toFormEncoded();

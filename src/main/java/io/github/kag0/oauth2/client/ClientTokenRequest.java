@@ -20,7 +20,7 @@ import java.util.Optional;
 public interface ClientTokenRequest extends TokenRequest, FormCodable, Parameters{
 
 	@Value.Derived
-	default GrantType grantType(){
+	static GrantType grantType(){
 		return GrantType.StdGrantType.client_credentials;
 	}
 

@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import static io.github.kag0.oauth2.Parameters.client_secret;
+
 /**
  * Created by nfischer on 9/3/2016.
  */

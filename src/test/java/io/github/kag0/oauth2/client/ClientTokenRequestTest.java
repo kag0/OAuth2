@@ -4,6 +4,7 @@ import io.github.kag0.oauth2.TokenRequest;
 import javaslang.collection.HashSet;
 import javaslang.collection.Set;
 
+import static junit.framework.TestCase.assertFalse;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
@@ -28,6 +29,8 @@ public class ClientTokenRequestTest {
 			ClientTokenRequest.fromFormEncoded("grant_type=nopez&scope=a+b+c+D");
 			fail();
 		}catch (IllegalArgumentException e){}
+
+		assertFalse(TokenRequest.parseEncoded("grant_type=nopez&scope=a+b+c+D").isPresent());
 	}
 
 }

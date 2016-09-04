@@ -1,4 +1,4 @@
-package io.github.kag0.oauth2.password;
+package io.github.kag0.oauth2.jwt;
 
 import io.github.kag0.oauth2.GrantType;
 import io.github.kag0.oauth2.Parameters;
@@ -13,47 +13,44 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * https://tools.ietf.org/html/rfc6749#section-4.3.2
- * Created by nfischer on 9/2/2016.
+ * Created by nfischer on 9/3/2016.
  */
 @Value.Immutable
-public interface PasswordTokenRequest extends TokenRequest, FormCodable, Parameters{
+public interface JwtTokenRequest extends TokenRequest, Parameters {
 
 	@Value.Derived
 	static GrantType grantType(){
-		return GrantType.StdGrantType.password;
+		return GrantType.JwtGrantType.INSTANCE;
 	}
 
-	String username();
-	String password();
+	String assertion();
 	Optional<Set<String>> scope();
 
 	@Value.Derived
 	default Map<String, String> toForm(){
 		Map<String, String> form = new HashMap<>();
 		form.put(grant_type, grantType().name());
-		form.put(username, username());
-		form.put(password, password());
+		form.put(assertion, assertion());
 		scope()
 				.map(Scopes::encodeScopes)
 				.ifPresent(s -> form.put(scope, s));
 		return form;
 	}
 
-	static PasswordTokenRequest fromForm(Map<String, String> form){
-		if(!GrantType.StdGrantType.password.name().equals(form.get(grant_type)))
+	static JwtTokenRequest fromForm(Map<String, String> form){
+		if(!GrantType.JwtGrantType.INSTANCE.name().equals(form.get(grant_type)))
 			throw new IllegalArgumentException("Expected grant_type " +
-					GrantType.StdGrantType.password.name() +
+					GrantType.JwtGrantType.INSTANCE.name() +
 					" but found " + form.get(grant_type)
 			);
-		return ImmutablePasswordTokenRequest.builder()
-				.username(form.get(username))
-				.password(form.get(password))
+		return ImmutableJwtTokenRequest.builder()
+				.assertion(form.get(assertion))
 				.scope(Optional.ofNullable(form.get(scope)).map(Scopes::decodeScopes))
 				.build();
 	}
 
-	static PasswordTokenRequest fromFormEncoded(String encoded){
+	static JwtTokenRequest fromFormEncoded(String encoded){
 		return fromForm(FormCodable.encodedToForm(encoded));
 	}
+
 }
