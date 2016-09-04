@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.github.kag0.oauth2.coding.JsonCodable;
 import javaslang.collection.Set;
+import javaslang.control.Either;
 import org.immutables.value.Value;
 
 import java.util.Optional;
@@ -37,5 +38,11 @@ public interface TokenResponse extends JsonCodable, Parameters {
 
 	static TokenResponse fromJson(JsonNode json) throws JsonProcessingException {
 		return MAPPER.treeToValue(json, ImmutableTokenResponse.class);
+	}
+
+	static Either<ErrorResponse, TokenResponse> parse(JsonNode json) throws JsonProcessingException {
+		if(json.get(access_token) != null)
+			return Either.right(fromJson(json));
+		return Either.left(ErrorResponse.fromJson(json));
 	}
 }

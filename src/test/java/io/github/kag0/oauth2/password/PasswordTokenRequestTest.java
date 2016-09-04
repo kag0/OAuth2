@@ -1,5 +1,6 @@
 package io.github.kag0.oauth2.password;
 
+import io.github.kag0.oauth2.TokenRequest;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -7,15 +8,15 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by nfischer on 9/3/2016.
  */
-public class TokenRequestTest {
+public class PasswordTokenRequestTest {
 	@Test
 	public void fromFormEncoded() throws Exception {
-		TokenRequest r = ImmutableTokenRequest.builder()
+		PasswordTokenRequest r = ImmutablePasswordTokenRequest.builder()
 				.username("jim")
 				.password("pass☢")
 				.build();
 		String rEncoded = r.toFormEncoded();
-		assertEquals(r, TokenRequest.fromFormEncoded(rEncoded));
+		assertEquals(r, TokenRequest.parseEncoded(rEncoded).get());
 	}
 
 }

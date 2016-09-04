@@ -2,6 +2,7 @@ package io.github.kag0.oauth2.code;
 
 import io.github.kag0.oauth2.GrantType;
 import io.github.kag0.oauth2.Parameters;
+import io.github.kag0.oauth2.TokenRequest;
 import io.github.kag0.oauth2.coding.FormCodable;
 import org.immutables.value.Value;
 
@@ -14,7 +15,7 @@ import java.util.Optional;
  * Created by nfischer on 9/2/2016.
  */
 @Value.Immutable
-public interface TokenRequest extends FormCodable, Parameters{
+public interface CodeTokenRequest extends TokenRequest, FormCodable, Parameters{
 
 	@Value.Derived
 	default GrantType grantType(){
@@ -34,25 +35,24 @@ public interface TokenRequest extends FormCodable, Parameters{
 				.map(URI::toASCIIString)
 				.ifPresent(r -> form.put(redirect_uri, r));
 		clientId().ifPresent(id -> form.put(client_id, id));
-
 		return form;
 	}
 
-	static TokenRequest fromForm(Map<String, String> form){
+	static CodeTokenRequest fromForm(Map<String, String> form){
 		if(!GrantType.StdGrantType.authorization_code.name().equals(form.get(grant_type)))
 			throw new IllegalArgumentException("Expected grant_type " +
 					GrantType.StdGrantType.authorization_code.name() +
 					" but found " + form.get(grant_type)
 			);
-		return ImmutableTokenRequest.builder()
+		return ImmutableCodeTokenRequest.builder()
 				.code(form.get(code))
 				.redirectUri(Optional.ofNullable(form.get(redirect_uri))
 						.map(URI::create))
-				.clientId(form.get(client_id))
+				.clientId(Optional.ofNullable(form.get(client_id)))
 				.build();
 	}
 
-	static TokenRequest fromFormEncoded(String encoded){
+	static CodeTokenRequest fromFormEncoded(String encoded){
 		return fromForm(FormCodable.encodedToForm(encoded));
 	}
 }

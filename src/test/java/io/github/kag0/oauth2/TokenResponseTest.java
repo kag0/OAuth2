@@ -22,7 +22,7 @@ public class TokenResponseTest {
 		JsonNode eJson = e.toJson();
 		System.out.println(eJson);
 
-		TokenResponse e2 = TokenResponse.fromJson(eJson);
+		TokenResponse e2 = TokenResponse.parse(eJson).right().get();
 		assertEquals(e, e2);
 	}
 

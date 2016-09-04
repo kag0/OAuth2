@@ -2,6 +2,7 @@ package io.github.kag0.oauth2.password;
 
 import io.github.kag0.oauth2.GrantType;
 import io.github.kag0.oauth2.Parameters;
+import io.github.kag0.oauth2.TokenRequest;
 import io.github.kag0.oauth2.coding.FormCodable;
 import io.github.kag0.oauth2.coding.Scopes;
 import javaslang.collection.Set;
@@ -16,7 +17,7 @@ import java.util.Optional;
  * Created by nfischer on 9/2/2016.
  */
 @Value.Immutable
-public interface TokenRequest extends FormCodable, Parameters{
+public interface PasswordTokenRequest extends TokenRequest, FormCodable, Parameters{
 
 	@Value.Derived
 	default GrantType grantType(){
@@ -39,19 +40,19 @@ public interface TokenRequest extends FormCodable, Parameters{
 		return form;
 	}
 
-	static TokenRequest fromForm(Map<String, String> form){
+	static PasswordTokenRequest fromForm(Map<String, String> form){
 		if(!GrantType.StdGrantType.password.name().equals(form.get(grant_type)))
 			throw new IllegalArgumentException("Expected grant_type " +
 					GrantType.StdGrantType.password.name() +
 					" but found " + form.get(grant_type)
 			);
-		return ImmutableTokenRequest.builder()
+		return ImmutablePasswordTokenRequest.builder()
 				.username(form.get(username))
 				.password(form.get(password))
 				.build();
 	}
 
-	static TokenRequest fromFormEncoded(String encoded){
+	static PasswordTokenRequest fromFormEncoded(String encoded){
 		return fromForm(FormCodable.encodedToForm(encoded));
 	}
 }

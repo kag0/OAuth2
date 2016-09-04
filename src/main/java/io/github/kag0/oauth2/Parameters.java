@@ -19,4 +19,9 @@ public interface Parameters {
 	String token_type        = "token_type";
 	String expires_in        = "expires_in";
 	String refresh_token     = "refresh_token";
+	String error             = "error";
+	String client_secret     = "client_secret";
+	String client_assertion_type = "client_assertion_type";
+	String client_assertion_type_jwt = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer";
+	String client_assertion  = "client_assertion";
 }

@@ -21,7 +21,7 @@ public class ErrorResponseTest {
 		JsonNode eJson = e.toJson();
 		System.out.println(eJson);
 
-		ErrorResponse e2 = ErrorResponse.fromJson(eJson);
+		ErrorResponse e2 = TokenResponse.parse(eJson).getLeft();
 		assertEquals(e, e2);
 	}
 

@@ -17,10 +17,24 @@ public interface GrantType extends Registry.Named {
 		authorization_code,
 		password,
 		client_credentials,
-		refresh_token;
+		refresh_token
+		;
 
 		StdGrantType(){
 			REGISTRY.register(this);
+		}
+	}
+
+	class JwtGrantType implements GrantType{
+
+		public static final JwtGrantType INSTANCE = new JwtGrantType();
+		static {
+			GrantType.REGISTRY.register(INSTANCE);
+		}
+
+		@Override
+		public String name() {
+			return "urn:ietf:params:oauth:grant-type:jwt-bearer";
 		}
 	}
 

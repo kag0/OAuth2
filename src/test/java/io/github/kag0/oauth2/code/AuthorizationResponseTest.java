@@ -15,7 +15,7 @@ public class AuthorizationResponseTest {
 				.state("bloblob")
 				.build();
 		String rEncoded = r.toFormEncoded();
-		assertEquals(r, AuthorizationResponse.fromFormEncoded(rEncoded));
+		assertEquals(r, AuthorizationResponse.parseEncoded(rEncoded).get());
 	}
 
 }
