@@ -24,4 +24,5 @@ public interface Parameters {
 	String client_assertion_type = "client_assertion_type";
 	String client_assertion_type_jwt = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer";
 	String client_assertion  = "client_assertion";
+	String assertion         = "assertion";
 }

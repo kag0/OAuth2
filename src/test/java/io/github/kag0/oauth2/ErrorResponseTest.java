@@ -25,4 +25,15 @@ public class ErrorResponseTest {
 		assertEquals(e, e2);
 	}
 
+	@Test
+	public void form(){
+		ErrorResponse e = ImmutableErrorResponse.builder()
+				.error(ErrorType.StdErrorType.invalid_request)
+				.errorDescription("oops")
+				.errorUri(URI.create("oops.com"))
+				.build();
+		String eEncoded = e.toFormEncoded();
+		assertEquals(e, ErrorResponse.fromFormEncoded(eEncoded));
+	}
+
 }

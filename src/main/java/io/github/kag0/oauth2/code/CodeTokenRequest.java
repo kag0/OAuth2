@@ -18,7 +18,7 @@ import java.util.Optional;
 public interface CodeTokenRequest extends TokenRequest, FormCodable, Parameters{
 
 	@Value.Derived
-	default GrantType grantType(){
+	static GrantType grantType(){
 		return GrantType.StdGrantType.authorization_code;
 	}
 

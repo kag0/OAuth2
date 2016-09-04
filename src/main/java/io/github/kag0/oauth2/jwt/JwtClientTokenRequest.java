@@ -1,5 +1,6 @@
 package io.github.kag0.oauth2.jwt;
 
+import io.github.kag0.oauth2.Parameters;
 import io.github.kag0.oauth2.TokenRequest;
 import io.github.kag0.oauth2.TokenRequestDecorator;
 import io.github.kag0.oauth2.coding.FormCodable;
@@ -13,7 +14,7 @@ import java.util.Optional;
  * Created by nfischer on 9/3/2016.
  */
 @Value.Immutable
-public abstract class JwtClientTokenRequest implements TokenRequestDecorator {
+public abstract class JwtClientTokenRequest implements TokenRequestDecorator, Parameters {
 
 	@Value.Parameter
 	public abstract TokenRequest base();
