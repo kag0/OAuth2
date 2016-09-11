@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 @JsonDeserialize(using = ResponseType.ResponseTypeDeserializer.class)
 public interface ResponseType extends Registry.Named {
 
-	Registry<ResponseType> REGISTRY = new Registry<>();
+	Registry<ResponseType> REGISTRY = new Registry<>(ResponseType.class);
 
 	enum StdResponseType implements ResponseType {
 		code,

@@ -10,7 +10,12 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 @JsonDeserialize(using = ErrorType.ErrorTypeDeserializer.class)
 public interface ErrorType extends Registry.Named {
 
-	Registry<ErrorType> REGISTRY = new Registry<>();
+	Registry<ErrorType> REGISTRY = new Registry<>(ErrorType.class);
+
+	static Registry registry(){
+
+		return REGISTRY;
+	}
 
 	enum StdErrorType implements ErrorType {
 		/**

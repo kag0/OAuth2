@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
  */
 @JsonDeserialize(using = TokenType.TokenTypeDeserializer.class)
 public interface TokenType extends Registry.Named {
-	Registry<TokenType> REGISTRY = new Registry<>();
+	Registry<TokenType> REGISTRY = new Registry<>(TokenType.class);
 
 	enum StdTokenType implements TokenType {
 		Bearer

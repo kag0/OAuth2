@@ -12,6 +12,8 @@ import static org.junit.Assert.assertEquals;
 public class TokenResponseTest {
 	@Test
 	public void fromJson() throws Exception {
+
+
 		TokenResponse e = ImmutableTokenResponse.builder()
 				.accessToken("asdf")
 				.tokenType(TokenType.StdTokenType.Bearer)

@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 @JsonDeserialize(using = GrantType.GrantTypeDeserializer.class)
 public interface GrantType extends Registry.Named {
 
-	Registry<GrantType> REGISTRY = new Registry<>();
+	Registry<GrantType> REGISTRY = new Registry<>(GrantType.class);
 
 	enum StdGrantType implements GrantType {
 		authorization_code,

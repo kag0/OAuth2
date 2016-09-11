@@ -8,17 +8,31 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import org.reflections.Reflections;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ConcurrentSkipListMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * Created by nfischer on 9/2/2016.
  */
 public final class Registry<T extends Registry.Named> {
 	private Map<String, T> entries = new ConcurrentSkipListMap<>();
+	private Class<T> clazz;
+	private AtomicBoolean init;
+	private Logger logger;
+
+	public Registry(Class<T> clazz){
+		this.clazz = clazz;
+		init = new AtomicBoolean(false);
+		logger = LoggerFactory.getLogger(clazz);
+	}
 
 	public Registry<T> register(T entry){
 		entries.put(entry.name(), entry);
@@ -26,6 +40,18 @@ public final class Registry<T extends Registry.Named> {
 	}
 
 	public T parse(String entry){
+		if(!init.getAndSet(true)) {
+			Set<Class<? extends T>> types = new Reflections("").getSubTypesOf(clazz);
+			logger.debug("Registering " + types);
+			for (Class c : types) {
+				try {
+					Class.forName(c.getName(), true, c.getClassLoader());
+				} catch (ClassNotFoundException e) {
+					logger.error("error while initializing class for type registry", e);
+				}
+			}
+		}
+
 		return entries.get(entry);
 	}
 
