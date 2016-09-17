@@ -29,7 +29,7 @@ public abstract class SecretClientTokenRequest implements TokenRequestDecorator 
 		return form;
 	}
 
-	static Optional<SecretClientTokenRequest> parse(Map<String, String> form){
+	public static Optional<SecretClientTokenRequest> parse(Map<String, String> form){
 		return TokenRequest.parse(form)
 				.map(base ->
 						ImmutableSecretClientTokenRequest.builder()
@@ -39,7 +39,7 @@ public abstract class SecretClientTokenRequest implements TokenRequestDecorator 
 				);
 	}
 
-	static Optional<SecretClientTokenRequest> parseEncoded(String form){
+	public static Optional<SecretClientTokenRequest> parseEncoded(String form){
 		return parse(FormCodable.encodedToForm(form));
 	}
 }

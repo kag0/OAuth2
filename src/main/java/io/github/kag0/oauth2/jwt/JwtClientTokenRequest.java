@@ -38,7 +38,7 @@ public abstract class JwtClientTokenRequest implements TokenRequestDecorator, Pa
 		return form;
 	}
 
-	static Optional<JwtClientTokenRequest> parse(Map<String, String> form){
+	public static Optional<JwtClientTokenRequest> parse(Map<String, String> form){
 		if(!client_assertion_type_jwt.equals(form.get(client_assertion_type)))
 			throw new IllegalArgumentException("Expected client_assertion_type " +
 					client_assertion_type_jwt +
@@ -54,7 +54,7 @@ public abstract class JwtClientTokenRequest implements TokenRequestDecorator, Pa
 				);
 	}
 
-	static Optional<JwtClientTokenRequest> parseEncoded(String form){
+	public static Optional<JwtClientTokenRequest> parseEncoded(String form){
 		return parse(FormCodable.encodedToForm(form));
 	}
 }
